@@ -6,6 +6,7 @@
 #include <cstring>
 #include <chrono>
 #include <fstream>
+#include <string>
 //#include <GL/glut.h>
 #include "World.H"
 #include "Unit.H"
@@ -122,18 +123,35 @@ int main(int argc, char *argv[])
 
       int red_score = world->red_score();
       if (red_score >= 0) {
-         ofstream results;
-         results.open ("Results.txt", ios::app | ios::out);
-         results << "game over: ";
+         fstream results;
+         results.open ("Results.txt", ios::app | ios::out | ios:in);
+         
+         String red, blue, draw;
+         int rscore, bscore, draws;
+
+         String line;
+         results >> red >> rscore;
+         results >> blue >> bscore;
+         results >> draw >> draws;
+
          cout << "game over: ";
          if (red_score == 2) {
-            results << "RED wins\n";
+            rscore++;
+            results << red << rscore;
+            results << blue << bscore;
+            results << draw << draws;
             cout << "RED wins" << endl;
          } else if (red_score == 1) {
-            results << "Draw\n";
+            results << red << rscore;
+            results << blue << bscore;
+            results << draw << draws;
+            draws++;
             cout << "draw" << endl;
          } else {
-            results << "BLUE wins\n";
+            results << red << rscore;
+            results << blue << bscore;
+            results << draw << draws;
+            blue++;
             cout << "BLUE wins" << endl;
          }
          results.close();
