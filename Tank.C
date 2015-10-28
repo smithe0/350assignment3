@@ -21,7 +21,9 @@ void Tank::act(World &w){
          break;
       case ATTACK_MOST_DANGEROUS:
          target = w.random_most_dangerous_target(*this);
+	 if(target != 0){
       w.attack(*this, *target);
+	 }
    }
    
    //Roll out
@@ -30,14 +32,17 @@ void Tank::act(World &w){
 
 //Override virtual function in unit
 void Tank::collision_hook(double prev_speed, bool collisions[4]){
+    //Collisions = {N, E, S, W}
+
    //Reverse direction of heading based on which wall the collision occured at
    if(collisions[0] || collisions[2]){
-      heading.y *= -1;
+	 heading.y *= -1;
    } 
    
    if(collisions[1] || collisions[3]){
-     heading.x *= -1; 
+     heading.x = -1*(heading.x); 
    } 
+   
    
    if(bounce){current_speed = prev_speed;}
 }

@@ -38,7 +38,7 @@ void World::move_unit(Unit &u)
   //Collision occured flag
   bool collision = false;
   bool collisions[4] = {false, false, false, false};
-    //double prev_speed = u.current_speed;
+  double prev_speed = u.current_speed;
 
   //Check to see if movement would result in a collision
   if(futureX+u.radius+buffer >= width) {
@@ -55,20 +55,20 @@ void World::move_unit(Unit &u)
   }
   if(futureY+u.radius+buffer >= height) {
     //Collision with Bottom wall
-    futureX = height - u.radius - buffer;
+    futureY = height - u.radius - buffer;
     collision = true;
     collisions[2] = true;
   }
-  if(futureY-u.radius-buffer >= 0) {
+  if(futureY-u.radius-buffer <= 0) {
     //Collision with Top wall
-    futureX = u.radius + buffer;
+    futureY = u.radius + buffer;
     collision = true;  
     collisions[0] = true; 
   }
 
   if(collision) {
-    u.collision_hook(u.current_speed, collisions);
-    u.current_speed = 0;
+	u.current_speed = 0;
+    u.collision_hook(prev_speed, collisions);
   } 
 
   //Update unit's position to new position
@@ -166,9 +166,8 @@ Vec2 World::mirror(const Vec2 &pos) const
     diff = midY - pos.y;
     newY = midY + diff;
   }
-
-  //Create vector with new values and return it
   return Vec2(newX, newY);
+
 }
 
 

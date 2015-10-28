@@ -21,7 +21,9 @@ void Marine::act(World &w){
          break;
       case ATTACK_MOST_DANGEROUS:
          target = w.random_most_dangerous_target(*this);
-      w.attack(*this, *target);
+	 if(target != 0){
+	   w.attack(*this, *target);
+	 }
    }
 
    //March
@@ -30,9 +32,11 @@ void Marine::act(World &w){
 
 //Override virtual function in unit
 void Marine::collision_hook(double prev_speed, bool collisions[4]){
-   //Reverse direction of heading based on which wall the collision occured at
+  //Collisions = {N, E, S, W}
+  
+  //Reverse direction of heading based on which wall the collision occured at
    if(collisions[0] || collisions[2]){
-      heading.y *= -1;
+	 heading.y *= -1;
    } 
    
    if(collisions[1] || collisions[3]){
