@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
             results << red << rscore;
             results << blue << bscore;
             results << draw << draws;
-            blue++;
+            bscore++;
             cout << "BLUE wins" << endl;
          }
          results.close();
