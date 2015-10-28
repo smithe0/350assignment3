@@ -221,7 +221,7 @@ Unit *World::random_weakest_target(Unit &u) const
   //Search for unit with lowest hp
   Unit * lowest = targets[0];
   for(auto &unit: targets) {
-    if(unit->hp < lowest->hp){
+    if(unit->hp_old < lowest->hp_old){
       lowest = unit;
     }
   }
@@ -265,7 +265,7 @@ Unit *World::random_most_dangerous_target(Unit &u) const
   //Search for unit with highest damage/hp remaining ratio
   Unit * baddest = targets[0];
   for(auto &unit: targets) {
-    if(unit->damage/unit->hp < baddest->damage/baddest->hp){
+    if(unit->damage/unit->hp_old < baddest->damage/baddest->hp_old){
       baddest = unit;
     }
   }
