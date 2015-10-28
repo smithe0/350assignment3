@@ -227,6 +227,15 @@ Unit *World::random_weakest_target(Unit &u) const
       lowest = unit;
     }
   }
+
+  std::vector<Unit*> ties;
+  for(auto &unit : targets) {
+    if(unit->hp_old == lowest->hp_old){
+      ties.push_back(unit);
+    }
+  }
+
+  lowest = ties[rnd_int(ties.size())];
   return lowest;
 }
 
@@ -250,6 +259,15 @@ Unit *World::random_closest_target(Unit &u) const
     }
   }
 
+  std::vector<Unit*> ties;
+  for(auto &unit : targets) {
+    if(distance2(u, *unit) == distance2(u, *closest)){
+      ties.push_back(unit);
+    }
+  }
+
+  closest = ties[rnd_int(ties.size())];
+
   return closest;
 }
 
@@ -271,6 +289,15 @@ Unit *World::random_most_dangerous_target(Unit &u) const
       baddest = unit;
     }
   }
+
+  std::vector<Unit*> ties;
+  for(auto &unit : targets) {
+    if(unit->damage/unit->hp_old == baddest->damage/baddest->hp_old){
+      ties.push_back(unit);
+    }
+  }
+
+  baddest = ties[rnd_int(ties.size())];
 
   return baddest;
 }
