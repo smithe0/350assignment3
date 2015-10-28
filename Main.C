@@ -127,13 +127,13 @@ int main(int argc, char *argv[])
          myfile << "game over: ";
          cout << "game over: ";
          if (red_score == 2) {
-            myFile << "RED wins\n";
+            myfile << "RED wins\n";
             cout << "RED wins" << endl;
          } else if (red_score == 1) {
-            myFile << "Draw\n";
+            myfile << "Draw\n";
             cout << "draw" << endl;
          } else {
-            myFile << "BLUE wins\n";
+            myfile << "BLUE wins\n";
             cout << "BLUE wins" << endl;
          }
          myfile.close();
