@@ -6,7 +6,6 @@
 #include <random>
 
 // 2-component vector
-
 struct Vec2
 {
   Vec2(double x_=0, double y_=0)

@@ -92,11 +92,13 @@ const char *apol2str(AttackPolicy pol)
 }
 
 
+//Clean up
 World::~World()
 {
-  // clean up
-  
-  // ... implement
+  //Delete each unit in units vector
+  for(auto &dude : units){
+    delete dude;
+  }
 }
 
 
