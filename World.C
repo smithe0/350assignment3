@@ -327,7 +327,7 @@ int World::red_score() const
     if(red && blue){
       //If there are is only one unit remaining on each side game enters showdown mode
       if(units.size() ==2){
-        startShowdownMode(*units[0], *units[1], *this); //Last two units moved and thrown towards eachother
+        //startShowdownMode(*units[0], *units[1], *this); //Last two units moved and thrown towards eachother
         //startShowdownMode(*units[2], *units[3], *this); //Last two units moved and thrown towards eachother
       }
       return -1;
