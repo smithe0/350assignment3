@@ -5,6 +5,8 @@
 #include "World.H"
 #include "Unit.H"
 
+#define PI 3.14159
+
 using namespace std;
 
 /* helper that you need to implement
@@ -99,12 +101,11 @@ World::~World()
 
 
 // deducts hit points and calls attack_hook
-
 void World::attack(Unit &attacker, Unit &attacked)
 {
   //Reduce attacked unit's health by attack strength of attacker
   attacked.hp -= (int)attacker.damage;
-
+  attack_hook(attacker, attacked);
   //Remove dead is handled by step in World2.C
 }
 
@@ -128,10 +129,10 @@ Vec2 World::rnd_pos(double radius) const
 // length of vector = 1
 Vec2 World::rnd_heading() const
 {
-  // Generate random value between (0 and 2)*pi
+  // Generate random value between (0 and 2)*pi radians
   // This should preserve a uniform distribution as the 2*rnd01 
   // transforms from an infinite set of points
-  double angle = (this->rnd01())*2; 
+  double angle = ((this->rnd01())*2)*PI; 
 
   // create Vec2 object with x = cos(angle), y = sin(angle)
   return Vec2(cos(angle), sin(angle));
@@ -223,14 +224,12 @@ Unit *World::random_weakest_target(Unit &u) const
       lowest = unit;
     }
   }
-
   return lowest;
 }
 
 
 // return a random unit that can be attacked by u with minimal distance to
 // u, or 0 if none exists
-
 Unit *World::random_closest_target(Unit &u) const
 {
   //Create list of possible targets
@@ -262,10 +261,10 @@ Unit *World::random_most_dangerous_target(Unit &u) const
   //If there are no available targets
   if(targets.size() ==0) {return 0;}
 
-  //Search for unit with highest damage
+  //Search for unit with highest damage/hp remaining ratio
   Unit * baddest = targets[0];
   for(auto &unit: targets) {
-    if(unit->damage < baddest->damage){
+    if(unit->damage/unit->hp < baddest->damage/baddest->hp){
       baddest = unit;
     }
   }
@@ -304,7 +303,5 @@ int World::red_score() const
   } else {
     return 2; //Otherwise return win!
   }
-
-
 }
 
