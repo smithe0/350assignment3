@@ -269,7 +269,7 @@ Unit *World::random_most_dangerous_target(Unit &u) const
   //Search for unit with highest damage
   Unit * baddest = targets[0];
   for(auto &unit: targets) {
-    if(unit->damage < lowest->damage){
+    if(unit->damage < baddest->damage){
       baddest = unit;
     }
   }
@@ -292,10 +292,10 @@ int World::red_score() const
   
   //Check all remaining units for team affiliations
   for(auto &unit : units){
-    if(unit->Team == Team::BLUE){
+    if(unit->team == Team::BLUE){
       blue = true;
     }
-    if(unit->Team == Team::RED){
+    if(unit->team == Team::RED){
       red = true;
     }
     //If there are at least one unit of each team game continues
