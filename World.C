@@ -28,6 +28,8 @@ using namespace std;
 
 */
 
+void startShowdownMode(Unit &u, Unit &v,const World &w);
+
 void World::move_unit(Unit &u)
 {
   //Take unit speed multiply by heading to get new position
@@ -295,7 +297,13 @@ int World::red_score() const
       red = true;
     }
     //If there are at least one unit of each team game continues
-    if(red && blue){return -1;} 
+    if(red && blue){
+      //If there are is only one unit remaining on each side game enters showdown mode
+      if(units.size() == 2){
+        startShowdownMode(units[0], units[1], *this); //Last two units moved and thrown towards eachother
+      }
+      return -1;
+    } 
   }
   
   //If in all the remaining units, none are red loss
@@ -306,3 +314,11 @@ int World::red_score() const
   }
 }
 
+//Place two units above and below midpoint of map and change headings towards eachother.
+void startShowdownMode(Unit &u, Unit &v,const World &w){
+  u.pos.x = w.width/2;
+  u.pos.y = w.height*3/4;
+  v.pos = w.mirror(u.pos);
+  u.heading = Vec2(0,-1.0);
+  v.heading = Vec2(0,1.0);
+}
