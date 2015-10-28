@@ -5,10 +5,6 @@
 #include "World.H"
 #include "Unit.H"
 
-//May not need this inclusion
-#include "World2.C"
-
-
 using namespace std;
 
 /* helper that you need to implement
