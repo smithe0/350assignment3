@@ -157,14 +157,14 @@ Vec2 World::mirror(const Vec2 &pos) const
     diff = pos.x - midX;
     newX = midX - diff;
   } else {
-    diff = midX - pos.X;
+    diff = midX - pos.x;
     newX = midX + diff;
   }
   if(pos.y >= midY){
-    diff = pos.Y - midY;
+    diff = pos.y - midY;
     newY = midY - diff;
   } else {
-    diff = midY - pos.Y;
+    diff = midY - pos.y;
     newY = midY + diff;
   }
 
@@ -176,7 +176,7 @@ Vec2 World::mirror(const Vec2 &pos) const
 // return squared distance between two unit centers
 double World::distance2(const Unit &u, const Unit &v)
 {
-  return pow((v.x - u.x), 2) + pow((v.y - u.y), 2);
+  return pow((v.pos.x - u.pos.x), 2) + pow((v.pos.y - u.pos.y), 2);
 }
 
 // return true iff u can attack v, i.e. distance of u's and v's centers is
@@ -201,8 +201,8 @@ void World::enemies_within_attack_range(const Unit &u,
 
   //Append all units to vector 
   for(auto &unit : units) {
-    if(can_attack(u, unit)) {
-      if(unit->team != u->team){
+    if(can_attack(u, *unit)) {
+      if(unit->team != u.team){
         targets.push_back(unit);
       }
     }
@@ -242,12 +242,12 @@ Unit *World::random_closest_target(Unit &u) const
   enemies_within_attack_range(u, targets);
 
   //If there are no available targets
-  if(targets.size() ==0) {return 0;}
+  if(targets.size() == 0) {return 0;}
 
   //Search for unit with lowest distance
   Unit * closest = targets[0];
   for(auto &unit: targets) {
-    if(distance2(*u, *unit) < distance2(*u, *closest)){
+    if(distance2(u, *unit) < distance2(u, *closest)){
       closest = unit;
     }
   }
@@ -292,10 +292,10 @@ int World::red_score() const
   
   //Check all remaining units for team affiliations
   for(auto &unit : units){
-    if(unit->Team == Unit::Team::BLUE){
+    if(unit->Team == Team::BLUE){
       blue = true;
     }
-    if(unit->Team == Unit::Team::RED){
+    if(unit->Team == Team::RED){
       red = true;
     }
     //If there are at least one unit of each team game continues
