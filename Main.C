@@ -5,6 +5,7 @@
 #include <sstream>
 #include <cstring>
 #include <chrono>
+#include <fstream>
 //#include <GL/glut.h>
 #include "World.H"
 #include "Unit.H"
@@ -121,16 +122,23 @@ int main(int argc, char *argv[])
 
       int red_score = world->red_score();
       if (red_score >= 0) {
-      cout << "game over: ";
-      if (red_score == 2) {
-         cout << "RED wins" << endl;
-      } else if (red_score == 1) {
-         cout << "draw" << endl;
-      } else {
-         cout << "BLUE wins" << endl;
-      }
-      delete world;
-      exit(0);
+         ofstream myfile;
+         myfile.open ("Results.txt");
+         myfile << "game over: ";
+         cout << "game over: ";
+         if (red_score == 2) {
+            myFile << "RED wins\n";
+            cout << "RED wins" << endl;
+         } else if (red_score == 1) {
+            myFile << "Draw\n";
+            cout << "draw" << endl;
+         } else {
+            myFile << "BLUE wins\n";
+            cout << "BLUE wins" << endl;
+         }
+         myfile.close();
+         delete world;
+         exit(0);
       }
    }
   
