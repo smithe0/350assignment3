@@ -122,21 +122,21 @@ int main(int argc, char *argv[])
 
       int red_score = world->red_score();
       if (red_score >= 0) {
-         ofstream myfile;
-         myfile.open ("Results.txt");
-         myfile << "game over: ";
+         ofstream results;
+         results.open ("Results.txt", ios::app | ios::out);
+         results << "game over: ";
          cout << "game over: ";
          if (red_score == 2) {
-            myfile << "RED wins\n";
+            results << "RED wins\n";
             cout << "RED wins" << endl;
          } else if (red_score == 1) {
-            myfile << "Draw\n";
+            results << "Draw\n";
             cout << "draw" << endl;
          } else {
-            myfile << "BLUE wins\n";
+            results << "BLUE wins\n";
             cout << "BLUE wins" << endl;
          }
-         myfile.close();
+         results.close();
          delete world;
          exit(0);
       }
