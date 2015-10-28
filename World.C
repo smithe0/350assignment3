@@ -28,7 +28,7 @@ using namespace std;
 
 */
 
-void startShowdownMode(Unit &u, Unit &v, World &w);
+void startShowdownMode(Unit &u, Unit &v, World const &w);
 
 void World::move_unit(Unit &u)
 {
@@ -315,7 +315,7 @@ int World::red_score() const
 }
 
 //Place two units above and below midpoint of map and change headings towards eachother.
-void startShowdownMode(Unit &u, Unit &v, World &w) {
+void startShowdownMode(Unit &u, Unit &v, World const &w) {
   u.pos.x = w.width/2;
   u.pos.y = w.height*3/4;
   v.pos = w.mirror(u.pos);
