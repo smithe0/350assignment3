@@ -126,10 +126,10 @@ int main(int argc, char *argv[])
          fstream results;
          results.open ("Results.txt", ios::app | ios::out | ios:in);
          
-         String red, blue, draw;
+         string red, blue, draw;
          int rscore, bscore, draws;
 
-         String line;
+         string line;
          results >> red >> rscore;
          results >> blue >> bscore;
          results >> draw >> draws;
