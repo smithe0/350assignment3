@@ -225,7 +225,7 @@ Unit *World::random_weakest_target(Unit &u) const
       lowest = unit;
     }
   }
-  /*
+  
   std::vector<Unit*> ties;
   for(auto &unit : targets) {
     if(unit->hp_old == lowest->hp_old){
@@ -233,7 +233,7 @@ Unit *World::random_weakest_target(Unit &u) const
     }
   }
   
-  lowest = ties[rnd_int(ties.size())];*/
+  lowest = ties[rnd_int(ties.size())];
   return lowest;
 }
 

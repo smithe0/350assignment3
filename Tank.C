@@ -21,10 +21,10 @@ void Tank::act(World &w){
          break;
       case ATTACK_MOST_DANGEROUS:
          target = w.random_most_dangerous_target(*this);
-	 if(target != 0){
-      w.attack(*this, *target);
-	 }
    }
+	if(target != 0){
+     w.attack(*this, *target);
+	}
    
    //Roll out
    w.move_unit(*this);
