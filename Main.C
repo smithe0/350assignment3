@@ -13,7 +13,7 @@
 #include "Marine.H"
 #include "Tank.H"
 
-#define FILENAME "resWW.txt"
+#define FILENAME "resDW.txt"
 
 using namespace std;
 
@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
   int n_marines = 100;
   int n_tanks   = 100;
 
-  //AttackPolicy red_policy = ATTACK_MOST_DANGEROUS;
+  AttackPolicy red_policy = ATTACK_MOST_DANGEROUS;
   //AttackPolicy blue_policy = ATTACK_MOST_DANGEROUS;  
 
-  AttackPolicy red_policy = ATTACK_WEAKEST;  
+  //AttackPolicy red_policy = ATTACK_WEAKEST;  
   AttackPolicy blue_policy = ATTACK_WEAKEST;  
 
   //AttackPolicy red_policy = ATTACK_CLOSEST;  
@@ -130,22 +130,37 @@ int main(int argc, char *argv[])
       int red_score = world->red_score();
       if (red_score >= 0) {
 		ofstream results;
+		ofstream red;
+		ofstream blue;
+		ofstream tie;
 		
+		
+		red.open ("RED.txt", ios::out | ios::app);
+		blue.open ("BLUE.txt", ios::out | ios::app);
+		tie.open ("TIE.txt", ios::out | ios::app);
 		results.open (FILENAME, ios::out | ios::app);
 		cout << "Game over: ";
 		if (red_score == 2) {
+		  red << 1;
 		  wins[0]++;
 		  cout << "RED wins" << endl;
 		} else if (red_score == 1) {
+		  tie << 1;
 		  wins[1]++;
 		  cout << "draw" << endl;
 		} else {
+		  blue << 1;
 		  wins[2]++;
 		  cout << "BLUE wins" << endl;
 		}
+
 		results << "Red: " << wins[0];
 		results << " Blue: " << wins[2];
 		results << " Tie: " << wins[1] << "\n";
+
+		red.close();
+		blue.close();
+		tie.close();
 		results.close();
 
 		delete world;

@@ -7,22 +7,60 @@ The results of each run will be printed to a text file in order to review the wi
 
 The matchups are the following:
 
-1. Attack_Most_Dangerous against Attack_Most_Dangerous
+(Convention is Red on LHS and Blue on RHS)
 
-2. Attack_Most_Dangerous against Attack_Closest
+1. Attack_Most_Dangerous (D) against Attack_Most_Dangerous (D)
 
-3. Attack_Most_Dangerous against Attack_Weakest
+2. Attack_Most_Dangerous (D) against Attack_Closest (C)
 
-4. Attack_Closest against Attack_Closest
+3. Attack_Most_Dangerous (D) against Attack_Weakest (W)
 
-5. Attack_Closest against Attack_Weakest
+4. Attack_Closest (C) against Attack_Closest (C)
 
-6. Attack_Weakest against Attack_Weakest
+5. Attack_Weakest (W) against Attack_Closest (C)
+
+6. Attack_Weakest (W) against Attack_Weakest (W)
 
 Results:
 
-1. The results for most dangerous vs most dangerous were as expected fairly evenly distributed between Red and Blue teams. Out of 100 runs however there were no ties.
+1. 59 red (D), 39 blue (D), 2 ties.
+The results for most dangerous vs most dangerous were as expected fairly evenly distributed between Red and Blue teams. With 59 red wins, 39 blue wins and 2 ties. 
 
-2. The team with the most dangerous policy dominated the team with the closest policy with the most dangerous policy winning 100 out of 100 trials.
+2. 100 red (D), 0 blue (C), 0 ties.
+This policy matchup shows a heavy advantage for the red team with the attack most dangerous policy who won 100 out of 100 matchups. No ties or Blue wins. Just to be sure I ran another 100 and the same result occured.
 
-3. The most dangerous policy in this test also held a heavy advantage over the attack weakest policy. Again the team with attack most dangerous policy won 100 out of 100 matches.
+3. 1 red (D), 99 blue (W), 0 ties.
+A bit of a surprise result in this test with target weakest being vastly superior to out previous frontrunner policy. 
+
+4. 47 red (C), 51 blue (C), 2 ties.
+As with any evenly matched test a similar distrabution of wins should occur between the teams.
+
+5. 100 red (W), 0 blue (C), 0 ties.
+The target weakest policy has a clear advantage over target closest just as the attack most dangerous did winning 100 games to none.
+
+6. 49 red (W), 49 blue (W), 2 ties.
+Even matchup with the same policies again predictably results in a fairly uniform distrabution of wins. This is a good sign an valuable to test however as it shows that the policy is acting similarily each time and it gives us more confidence in the stats when that policy faces another.
+
+For the policies that dominated thier matchups it seems that the testing model of only 100 runs may not be enough. I would like to see numbers high enough to see at least a few wins for the losing side.
+
+Additional runs:
+
+2. 500 red (D), 0 blue (C), 0 ties.
+
+3. 2 red (D), 498 (W), 0 ties.
+
+5. 495 red (W), 5 blue (C), 0 ties.
+
+
+Interestingly the attack most dangerous seems to dominate attack closest far more than attack weakest does, yet attack most dangerous was dominated itself by attack weakest.
+
+The bash code used to run the loop in the experiement was:
+
+ #!/bin/bash 
+ COUNTER=0
+ while [  $COUNTER -lt 100 ]; do
+	./Testing
+    let COUNTER=COUNTER+1 
+ done
+
+Where Testing was the name of the compiled file that was used to run the tests. It was a copy of the simul.C file with all of the graphics and delays cut out for the sake of fast testing. It also printed results to file.
