@@ -162,7 +162,13 @@ int main(int argc, char *argv[])
   int n_tanks   = 100;
 
   AttackPolicy red_policy = ATTACK_MOST_DANGEROUS;
-  AttackPolicy blue_policy = ATTACK_MOST_DANGEROUS;  
+  //AttackPolicy blue_policy = ATTACK_MOST_DANGEROUS;  
+
+  //AttackPolicy red_policy = ATTACK_WEAKEST;  
+  //AttackPolicy blue_policy = ATTACK_WEAKEST;  
+
+  //AttackPolicy red_policy = ATTACK_CLOSEST;  
+  AttackPolicy blue_policy = ATTACK_CLOSEST;  
 
   bool bounce = true;
 

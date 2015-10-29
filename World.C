@@ -28,8 +28,6 @@ using namespace std;
 
 */
 
-void startShowdownMode(Unit &u, Unit &v, World const &w);
-
 void World::move_unit(Unit &u)
 {
   //Take unit speed multiply by heading to get new position
@@ -227,15 +225,15 @@ Unit *World::random_weakest_target(Unit &u) const
       lowest = unit;
     }
   }
-
+  /*
   std::vector<Unit*> ties;
   for(auto &unit : targets) {
     if(unit->hp_old == lowest->hp_old){
       ties.push_back(unit);
     }
   }
-
-  lowest = ties[rnd_int(ties.size())];
+  
+  lowest = ties[rnd_int(ties.size())];*/
   return lowest;
 }
 
@@ -267,7 +265,6 @@ Unit *World::random_closest_target(Unit &u) const
   }
 
   closest = ties[rnd_int(ties.size())];
-
   return closest;
 }
 
@@ -280,7 +277,7 @@ Unit *World::random_most_dangerous_target(Unit &u) const
   enemies_within_attack_range(u, targets);
 
   //If there are no available targets
-  if(targets.size() ==0) {return 0;}
+  if(targets.size() == 0) {return 0;}
 
   //Search for unit with highest damage/hp remaining ratio
   Unit * baddest = targets[0];
@@ -325,11 +322,6 @@ int World::red_score() const
     }
     //If there are at least one unit of each team game continues
     if(red && blue){
-      //If there are is only one unit remaining on each side game enters showdown mode
-      if(units.size() ==2){
-        //startShowdownMode(*units[0], *units[1], *this); //Last two units moved and thrown towards eachother
-        //startShowdownMode(*units[2], *units[3], *this); //Last two units moved and thrown towards eachother
-      }
       return -1;
     } 
   }
@@ -340,13 +332,4 @@ int World::red_score() const
   } else {
     return 2; //Otherwise return win!
   }
-}
-
-//Place two units above and below midpoint of map and change headings towards eachother.
-void startShowdownMode(Unit &u, Unit &v, World const &w) {
-  u.pos.x = w.width/2;
-  u.pos.y = w.height*3/4;
-  v.pos = w.mirror(u.pos);
-  u.heading = Vec2(0,-1.0);
-  v.heading = Vec2(0,1.0);
 }

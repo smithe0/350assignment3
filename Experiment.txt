@@ -1,2 +1,28 @@
 Describe your experimental setup and your results.
 
+There are three potential attack policies Attack_Weakest, Attack_Most_Dangerous, and Attack_Closest.
+Using a bash loop the program will be runn 100 times for each possible attack policy matchup (6 matchups).
+
+The results of each run will be printed to a text file in order to review the win rates of the policy matchups.
+
+The matchups are the following:
+
+1. Attack_Most_Dangerous against Attack_Most_Dangerous
+
+2. Attack_Most_Dangerous against Attack_Closest
+
+3. Attack_Most_Dangerous against Attack_Weakest
+
+4. Attack_Closest against Attack_Closest
+
+5. Attack_Closest against Attack_Weakest
+
+6. Attack_Weakest against Attack_Weakest
+
+Results:
+
+1. The results for most dangerous vs most dangerous were as expected fairly evenly distributed between Red and Blue teams. Out of 100 runs however there were no ties.
+
+2. The team with the most dangerous policy dominated the team with the closest policy with the most dangerous policy winning 100 out of 100 trials.
+
+3. The most dangerous policy in this test also held a heavy advantage over the attack weakest policy. Again the team with attack most dangerous policy won 100 out of 100 matches.

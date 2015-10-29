@@ -13,17 +13,18 @@
 #include "Marine.H"
 #include "Tank.H"
 
+#define FILENAME "resWW.txt"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
   if (argc != 1 && argc != 10) {
-    cerr << "usage: " << argv[0] << " width height delay seed marines tanks redpol bluepol bounce" << endl;
+    cerr << "usage: " << argv[0] << "width height delay seed marines tanks redpol bluepol bounce" << endl;
     cerr << "       delay in ms, seed=0: use time, policies: 0 weakest/1 closest/2 most dangerous" << endl;
     exit(1);
   }
-
+  int wins[3] = {0,0,0};
   double width  = 700;
   double height = 700;
 
@@ -33,8 +34,14 @@ int main(int argc, char *argv[])
   int n_marines = 100;
   int n_tanks   = 100;
 
-  AttackPolicy red_policy = ATTACK_MOST_DANGEROUS;
-  AttackPolicy blue_policy = ATTACK_MOST_DANGEROUS;  
+  //AttackPolicy red_policy = ATTACK_MOST_DANGEROUS;
+  //AttackPolicy blue_policy = ATTACK_MOST_DANGEROUS;  
+
+  AttackPolicy red_policy = ATTACK_WEAKEST;  
+  AttackPolicy blue_policy = ATTACK_WEAKEST;  
+
+  //AttackPolicy red_policy = ATTACK_CLOSEST;  
+  //AttackPolicy blue_policy = ATTACK_CLOSEST;  
 
   bool bounce = true;
 
@@ -118,47 +125,35 @@ int main(int argc, char *argv[])
   }
    while(true){
       cout << "." << flush;
-      //world->attacks.clear();
       world->step();
 
       int red_score = world->red_score();
       if (red_score >= 0) {
-         fstream results;
-         results.open ("Results.txt", ios::app | ios::out | ios:in);
-         
-         string red, blue, draw;
-         int rscore, bscore, draws;
+		ofstream results;
+		
+		results.open (FILENAME, ios::out | ios::app);
+		cout << "Game over: ";
+		if (red_score == 2) {
+		  wins[0]++;
+		  cout << "RED wins" << endl;
+		} else if (red_score == 1) {
+		  wins[1]++;
+		  cout << "draw" << endl;
+		} else {
+		  wins[2]++;
+		  cout << "BLUE wins" << endl;
+		}
+		results << "Red: " << wins[0];
+		results << " Blue: " << wins[2];
+		results << " Tie: " << wins[1] << "\n";
+		results.close();
 
-         string line;
-         results >> red >> rscore;
-         results >> blue >> bscore;
-         results >> draw >> draws;
-
-         cout << "game over: ";
-         if (red_score == 2) {
-            rscore++;
-            results << red << rscore;
-            results << blue << bscore;
-            results << draw << draws;
-            cout << "RED wins" << endl;
-         } else if (red_score == 1) {
-            results << red << rscore;
-            results << blue << bscore;
-            results << draw << draws;
-            draws++;
-            cout << "draw" << endl;
-         } else {
-            results << red << rscore;
-            results << blue << bscore;
-            results << draw << draws;
-            bscore++;
-            cout << "BLUE wins" << endl;
-         }
-         results.close();
-         delete world;
-         exit(0);
+		delete world;
+		exit(0);
       }
    }
   
-  return 0;
+   return 0;
 }
+
+
